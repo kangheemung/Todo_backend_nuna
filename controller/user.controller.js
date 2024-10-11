@@ -24,4 +24,27 @@ userController.createUser=async (req,res) => {
         res.status(400).json({status:"fail",error});
     }
 };
-module.exports = userController;
+userController.loginWithEmail = anync(req.res) => {
+    try{
+        // 있다면 ? 유저 정보 + 토큰 
+        //프론트 엔드 이 정보 저장 
+        // 1. router설정
+        //2. 이메일 패스워드 정보 읽어오기 
+        //3. 이메일을 가지고 유저 정보 가져오기
+        // 4. 이 유전에 디비에 있는 패스워드와 프론트엔드가 보낸 패스워드가 같은지 비교 
+        // 5. 맞다 ! 토큰 발행
+        // 6. 틀리면 에러베세지 보냄 
+        // 응ㅇ답
+    const {email,password} = req.body
+    const user = await User.findOne({email})
+    if(user){
+        password ==> 유저가 입력한 그자체
+        user.password=>암호화 된 패스워들 
+
+    }
+
+    }catch(error){
+
+    }
+
+}
