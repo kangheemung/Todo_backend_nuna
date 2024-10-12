@@ -1,19 +1,31 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema
-const userSchema= Schema({
-    name:{
-        type:String,
-        required:true  
-    },
-    email:{
-        type:String,
-        required:true
-    },
-    password:{
-        type:String,
-        required:true
-    }
-},{timestamps:true})
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 
-const User=mongoose.model("User",userSchema);
-module.exports =User;
+const userSchema = Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true,
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+    },
+    { timestamps: true }
+);
+
+//유저와 관련이 있는 목록 같이 메서드 정리
+userSchema.methods.generateToken = async function () {
+    const token = jwt.sign({ _id: this._id}, JWT_SECRET_KEY);
+    return token;
+};
+const User = mongoose.model('User', userSchema);
+module.exports = User;
