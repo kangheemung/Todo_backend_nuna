@@ -33,7 +33,7 @@ userController.loginWithEmail = async (req, res) => {
         // 6. 틀리면 에러베세지 보냄
         // 응ㅇ답
         const { email, password } = req.body;
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }, '-createdAt -updatedAt -__v');
         if (!user) {
             throw new Error('User not found');
         }
