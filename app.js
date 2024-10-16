@@ -57,14 +57,14 @@ mongoose
     });
 
 //포트번호 설정
-app.listen(process.env.PORT || 8080, () => {
-    console.log('Server running on port 8080');
+app.listen(process.env.PORT || 3001, () => {
+    console.log('Server running on port 3001');
 });
 //1. 회원가입
 //유저가 이메일, 패스워드, 유저 이름 입력해서 보냄
 // 로그인 유저
 //받은 정보를 저장함(데이터 베이스 모델 필요)
-// 패스워드 암호호 시켜서 저장 라이브러리 이용 
+// 패스워드 암호호 시켜서 저장 라이브러리 이용
 //1.라우터
 //2. 모델
 //3 . 데이터 저장 (중복 가입이 안되게 가입된 유저 유무 판단 후 ,패스워드 암호화 )
