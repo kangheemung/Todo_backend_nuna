@@ -57,8 +57,8 @@ mongoose
     });
 
 //포트번호 설정
-app.listen(process.env.PORT || 3001, () => {
-    console.log('Server running on port 3001');
+app.listen(process.env.PORT || 8080, () => {
+    console.log('Server running on port 8080');
 });
 //1. 회원가입
 //유저가 이메일, 패스워드, 유저 이름 입력해서 보냄
