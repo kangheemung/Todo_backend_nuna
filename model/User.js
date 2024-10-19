@@ -24,6 +24,9 @@ const userSchema = Schema(
 userSchema.methods.toJSON = function () {
     const obj=this._doc;
     delete obj.password;
+    delete obj.updatedAt;
+    delete obj.__v
+    delete obj.createdAt;
     return obj;
 };
 //유저와 관련이 있는 목록 같이 메서드 정리
