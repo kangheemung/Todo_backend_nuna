@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const taskSchema = Schema({
+const taskSchema = new Schema({
     task: {
         type: String,
         required: true,
@@ -9,6 +9,11 @@ const taskSchema = Schema({
         type: Boolean,
         required: true,
     },
+    author: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
+    }
 });
 //taskModel
 const Task = mongoose.model('Task', taskSchema);
