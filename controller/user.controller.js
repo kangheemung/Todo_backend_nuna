@@ -34,6 +34,10 @@ userController.loginWithEmail = async (req, res) => {
         // 응답
         const { email, password } = req.body;
         const user = await User.findOne({ email }, '-createdAt -updatedAt -__v');
+        if (!user) {
+            throw new Error('Account not found. Please register.'); // 登録されていない場合のエラーメッセージ
+        }
+
         if (user) {
             const isMatch = bcrypt.compareSync(password, user.password);
             // password ==> 유저가 입력한 그자체
@@ -42,6 +46,8 @@ userController.loginWithEmail = async (req, res) => {
                 const token = await user.generateToken();
                 // console.log(token);
                 return res.status(200).json({ status: 'success', user, token });
+            } else {
+                throw new Error('Incorrect password. Please try again.'); // パスワードが間違っている場合のエラーメッセージ
             }
         }
         throw new Error(error.message || 'Account not found. Please register. ');
