@@ -8,9 +8,11 @@ userController.createUser = async (req, res) => {
         const { email, name, password } = req.body;
         const user = await User.findOne({ email });
         if (user) {
-            throw new Error('You are already a registered user. ');
+            throw new Error('You are already a registered user. Please log in instead.');
         }
-
+        if (!name || !email || !password) {
+            throw new Error('Please enter all information.');
+        }
         //암호화
         const salt = bcrypt.genSaltSync(saltRounds);
         const hash = bcrypt.hashSync(password, salt);
@@ -19,7 +21,7 @@ userController.createUser = async (req, res) => {
         res.status(200).json({ status: 'success' });
         console.log('hash', hash);
     } catch (error) {
-        res.status(400).json({ status: 'fail', error });
+        res.status(400).json({ status: 'fail', message: error.message });
     }
 };
 userController.loginWithEmail = async (req, res) => {
@@ -42,26 +44,26 @@ userController.loginWithEmail = async (req, res) => {
             if (isMatch) {
                 const token = await user.generateToken();
                 // console.log(token);
-
                 return res.status(200).json({ status: 'success', user, token });
             }
+
+            throw new Error('ID or password does not match ');
         }
-        throw new Error('Email or password does not match.');
     } catch (error) {
         res.status(400).json({ status: 'fail', message: error.message });
     }
 };
 userController.getUser = async (req, res) => {
-try{
-    const { userId } = req; //req.userId
-    const user = await User.findById(userId);
-    
-    if (!user) {
-        throw new Error("can not find user");
+    try {
+        const { userId } = req.userId; //req.userId
+        const user = await User.findById(userId);
+
+        if (!user) {
+            throw new Error('can not find user');
+        }
+        res.status(200).json({ status: 'success', user });
+    } catch (error) {
+        res.status(400).json({ status: 'fail', message: error.message });
     }
-res.status(200).json({status: "success", user });
-}catch(error){
-    res.status(400).json({ status: 'fail', message: error.message });
-}
-}
+};
 module.exports = userController;

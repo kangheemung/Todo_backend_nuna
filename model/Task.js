@@ -15,6 +15,14 @@ const taskSchema = new Schema({
         ref: "User"
     }
 });
+taskSchema.methods.toJSON = function () {
+    const obj=this._doc;
+    delete obj.password;
+    delete obj.updatedAt;
+    delete obj.__v
+    delete obj.createdAt;
+    return obj;
+};
 //taskModel
 const Task = mongoose.model('Task', taskSchema);
 module.exports = Task;

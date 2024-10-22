@@ -1,4 +1,4 @@
-const authController={};
+const authController = {};
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
@@ -9,20 +9,19 @@ authController.authenticate = (req, res, next) => {
             throw new Error('Invalid token');
         }
         const token = tokenString.replace('Bearer ', '');
-        jwt.verify(token,JWT_SECRET_KEY,(error,payload) => {
-            if(error){
-                throw new Error("invaild token")
+        jwt.verify(token, JWT_SECRET_KEY, (error, payload) => {
+            if (error) {
+                throw new Error('invaild token');
             }
-            // res.status(200).json({status:"success", userId : payload._id})
+           
+            res.status(200).json({status:"success", userId : payload._id})
             // console.log("payload???", payload);
-            req.userId = payload._id
-            next();
+            req.userId = payload._id;
         });
-
-}catch(error){
-    res.status(400).json({status: "fail",message: error.message})
-
+        next();
+    } catch (error) {
+        res.status(400).json({ status: 'fail', message: error.message });
     }
-}
+};
 module.exports = authController;
 //미들웨어  중간에 있는거

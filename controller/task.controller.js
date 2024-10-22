@@ -4,12 +4,11 @@ const taskController = {};
 taskController.createTask = async (req, res) => {
     try {
         const { task, isComplete } = req.body;
-        const {userId }=req;
-
-        const newTask = new Task({ task, isComplete ,author: userId});
+        const { userId } = req;
+        const newTask = new Task({ task, isComplete, author: userId });
         await newTask.save();
 
-        res.status(200).json({ status: 'OK', data: newTask });
+        return res.status(200).json({ status: 'OK', data: newTask });
     } catch (err) {
         if (err.name === 'ReferenceError' && err.message.includes('Task is not defined')) {
             return res.status(400).json({ status: 'fail', error: 'Task field is required' });

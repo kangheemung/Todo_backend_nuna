@@ -1,14 +1,14 @@
 //detail엔드 파일
 const express = require('express');
+const authController = require('../controller/auth.controller');
 const router = express.Router();
 const userController = require('../controller/user.controller');
-const authController = require('../controller/auth.controller');
 
 //1.회원가입 endpoint
 router.post('/', userController.createUser);
 router.post('/login', userController.loginWithEmail);
 //토근을 총해 유저 id빼내고 => 그아이디로 유저 객체 찾아서 보내주기
-router.get('/me', authController.authenticate,userController.getUser);
+router.get('/me', authController.authenticate, userController.getUser);
 
 module.exports = router;
 //2.로그인
