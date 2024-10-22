@@ -44,7 +44,7 @@ userController.loginWithEmail = async (req, res) => {
                 return res.status(200).json({ status: 'success', user, token });
             }
         }
-        throw new Error('ID or password does not match ');
+        throw new Error(error.message || 'Account not found. Please register. ');
     } catch (error) {
         res.status(400).json({ status: 'fail', message: error.message });
     }
