@@ -10,9 +10,6 @@ userController.createUser = async (req, res) => {
         if (user) {
             throw new Error('You are already a registered user. Please log in instead.');
         }
-        if (!name || !email || !password) {
-            throw new Error('Please enter all information.');
-        }
         //암호화
         const salt = bcrypt.genSaltSync(saltRounds);
         const hash = bcrypt.hashSync(password, salt);
@@ -46,9 +43,8 @@ userController.loginWithEmail = async (req, res) => {
                 // console.log(token);
                 return res.status(200).json({ status: 'success', user, token });
             }
-
-            throw new Error('ID or password does not match ');
         }
+        throw new Error('ID or password does not match ');
     } catch (error) {
         res.status(400).json({ status: 'fail', message: error.message });
     }
