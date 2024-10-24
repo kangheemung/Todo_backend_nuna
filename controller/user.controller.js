@@ -57,7 +57,7 @@ userController.loginWithEmail = async (req, res) => {
 };
 userController.getUser = async (req, res) => {
     try {
-        const { userId } = req.userId; //req.userId
+        const { userId } = req; //req.userId
         const user = await User.findById(userId);
 
         if (!user) {
